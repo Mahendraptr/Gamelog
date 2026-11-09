@@ -1224,7 +1224,7 @@ $('#fileRestore').addEventListener('change',function(e){var f=e.target.files&&e.
 function backfillHours(){var q=S.games.filter(function(g){return !(g.hltb&&g.hltb.main)}).slice(0,8),i=0,changed=false;
 (function next(){if(i>=q.length){if(changed){saveNow();if(ui.tab==='home')refresh()}return}var g=q[i++];hltbRemote(g.title).then(function(h){if(h){g.hltb=h;changed=true}}).then(function(){setTimeout(next,600)})})()}
 /* ---------- cloud account and sync (Supabase) ---------- */
-var SUPABASE_URL='https://YOUR-PROJECT.supabase.co',SUPABASE_ANON_KEY='YOUR-ANON-KEY';
+var SUPABASE_URL='https://woyvqwshoorhrkzshxas.supabase.co',SUPABASE_ANON_KEY='sb_publishable_cIuf9ZeDKwsB837NIAEz2Q_kcSwSS99';
 var KEYC='questlog.cloud',sb=null,CL={uid:null,at:'',dirty:false};
 try{CL=Object.assign(CL,JSON.parse(localStorage.getItem(KEYC)||'{}'))}catch(e){}
 function cloudMeta(){try{localStorage.setItem(KEYC,JSON.stringify(CL))}catch(e){}}
