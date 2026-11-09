@@ -149,7 +149,7 @@ html:not([data-cols="2"]) .gcard .gt,html:not([data-cols="2"]) .gcard .gm,html:n
 .acct{display:flex;flex-direction:column;gap:14px}
 .acct-h{display:flex;align-items:center;gap:14px}
 .acct-h b{font-size:17px}
-.sic-av{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+.sic-av{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
 .gate{min-height:100%;justify-content:center;text-align:center;gap:18px}.gate .gbtn,.gate .btn{width:100%}
 .gate-ic{width:88px;height:88px;margin:0 auto;border-radius:28px;display:grid;place-items:center;color:var(--accent-ink);background:linear-gradient(145deg,var(--accent),#7C5CFF);box-shadow:0 14px 40px -12px var(--accent)}
 .acct-av{width:56px;height:56px;border-radius:50%;object-fit:cover;background:var(--surface2);display:grid;place-items:center;color:var(--muted);flex:none}
@@ -253,6 +253,7 @@ html[data-cols="4"] .gcard .gt,html[data-cols="5"] .gcard .gt{font-size:inherit}
 .rc2{flex-direction:row;align-items:center;gap:12px}.rc2 .rtext{-webkit-line-clamp:2}.rc2 .rcv{width:64px}
 .slist{display:flex;flex-direction:column;gap:10px}
 .srow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;color:var(--fg)}
+.sgrp{display:flex;flex-direction:column;gap:3px}.sgrp>.srow:first-child{border-radius:18px 18px 6px 6px}.sgrp>.srow:last-child{border-radius:6px 6px 18px 18px}
 .srow .sic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);flex:none}
 .stx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.stx b{font-size:16px}
 .srow>svg{color:var(--muted);flex:none}
@@ -1234,31 +1235,16 @@ try{CL=Object.assign(CL,JSON.parse(localStorage.getItem(KEYC)||'{}'))}catch(e){}
 function cloudMeta(){try{localStorage.setItem(KEYC,JSON.stringify(CL))}catch(e){}}
 function sbConfigured(){return /^https:\/\/[a-z0-9-]+\.supabase\.(co|in)/i.test(SUPABASE_URL)&&SUPABASE_URL.indexOf('YOUR-PROJECT')<0&&SUPABASE_ANON_KEY.length>20&&SUPABASE_ANON_KEY.indexOf('YOUR-')<0}
 function whenUp(fn){if(ui.appUp)fn();else setTimeout(function(){whenUp(fn)},300)}
-function setSync(st,err){if(st==='err')dbg('SYNC ERROR',err);ui.cl.state=st;ui.cl.err=err||'';if(st==='ok')ui.cl.at=Date.now();cloudUI()}
+function setSync(st,err){ui.cl.state=st;ui.cl.err=err||'';if(st==='ok')ui.cl.at=Date.now();cloudUI()}
 function cloudUI(){if(!ui.appUp)return;if(!$('#onb').hidden){if(ui.gate)renderGate();return}
 if(ui.tab==='settings'&&S.profile&&(!ui.setPage||ui.setPage==='account')&&!$('#sheet').classList.contains('on'))refresh()}
-/* ---------- on-screen auth debug log ---------- */
-var DBG=[],dbgMin=false;
-function dbgFmt(x){if(x===undefined)return '';try{return typeof x==='string'?x:JSON.stringify(x,function(k,v){return /token/i.test(k)&&typeof v==='string'?v.slice(0,8)+'...('+v.length+' chars)':(v instanceof Error?v.message:v)},1)}catch(e){return String(x)}}
-function dbgUrl(u){return String(u).replace(/(access_token|refresh_token|provider_token|provider_refresh_token|code)=([^&#]+)/g,function(m,k,v){return k+'='+v.slice(0,8)+'...('+v.length+')'})}
-function dbg(label,data){DBG.push(new Date().toLocaleTimeString()+'  '+label+(data!==undefined?'\n'+dbgFmt(data):''));if(DBG.length>80)DBG.shift();try{dbgDraw()}catch(e){}}
-function dbgDraw(){if(!document.body)return;var b=document.getElementById('dbgbox');
- if(!b){b=document.createElement('div');b.id='dbgbox';b.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99999;background:rgba(0,0,0,.92);color:#9fffa8;font:11px/1.35 ui-monospace,Menlo,monospace;border-top:2px solid #ff6a3d;max-width:560px;margin:0 auto';
-  b.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:#1a1a1a;color:#fff"><b>Auth debug</b><span><button data-d="copy" style="margin-left:6px">Copy</button><button data-d="min" style="margin-left:6px">_</button><button data-d="x" style="margin-left:6px">X</button></span></div><pre id="dbgpre" style="margin:0;padding:8px 10px;max-height:38vh;overflow:auto;white-space:pre-wrap;word-break:break-all"></pre>';
-  b.addEventListener('click',function(e){var d=e.target&&e.target.dataset&&e.target.dataset.d;if(!d)return;e.stopPropagation();
-   if(d==='x')b.remove();else if(d==='min'){dbgMin=!dbgMin;document.getElementById('dbgpre').style.display=dbgMin?'none':'block'}
-   else if(d==='copy'){var tx=DBG.join('\n\n');try{navigator.clipboard.writeText(tx).then(function(){toast('Copied')},function(){alert(tx)})}catch(er){alert(tx)}}});
-  document.body.appendChild(b)}
- var pre=document.getElementById('dbgpre');pre.textContent=DBG.join('\n\n');pre.scrollTop=pre.scrollHeight}
-window.addEventListener('error',function(e){dbg('window error',e.message+' @'+(e.lineno||''))});
-window.addEventListener('unhandledrejection',function(e){dbg('unhandled rejection',(e.reason&&e.reason.message)||String(e.reason))});
-function forceRender(){if(!ui.appUp)return;if(!$('#onb').hidden){if(ui.gate)renderGate();return}try{buildNav();renderView()}catch(e){dbg('render error',e.message)}}
+function forceRender(){if(!ui.appUp)return;if(!$('#onb').hidden){if(ui.gate)renderGate();return}try{buildNav();renderView()}catch(e){}}
 function userInfo(u){var md=(u&&u.user_metadata)||{};return {id:u.id,email:u.email||md.email||'',name:md.full_name||md.name||'',pic:md.avatar_url||md.picture||''}}
 function setUser(u){ui.cl.user=u||null;CL.user=u?userInfo(u):null;cloudMeta();try{if(u)localStorage.setItem('questlog.user',JSON.stringify(u));else localStorage.removeItem('questlog.user')}catch(e){}}
 function ensureLogin(u){if(ui.cl.uid===u.id&&ui.cl.loginP)return ui.cl.loginP;ui.cl.uid=u.id;
 ui.cl.loginP=Promise.resolve().then(function(){return cloudLogin(u)}).catch(function(e){setSync('err',(e&&e.message)||String(e))});return ui.cl.loginP}
 function cleanAuthUrl(){try{if(/access_token=|refresh_token=|[?&]code=|[#&?]error=/.test(location.hash+location.search))history.replaceState(null,'',location.pathname)}catch(e){}}
-function onSession(session,ev){dbg('onSession '+ev+' user='+(session&&session.user?session.user.email:'none'));
+function onSession(session,ev){
  if(ev==='SIGNED_OUT'){setUser(null);ui.cl.ready=false;ui.cl.uid=null;ui.cl.loginP=null;ui.cl.paused=false;setSync('idle');return}
  if(!session||!session.user)return;
  var u=session.user,fresh=!ui.cl.user||ui.cl.user.id!==u.id;
@@ -1269,15 +1255,12 @@ function onSession(session,ev){dbg('onSession '+ev+' user='+(session&&session.us
   else ensureLogin(u)}
  if(fresh&&ev==='SIGNED_IN')whenUp(function(){toast(t('signedInAs',{e:u.email||''}))});
  cloudUI();setTimeout(forceRender,400)}
-function cloudInit(){dbg('page load',{url:dbgUrl(location.href),supabaseLib:!!window.supabase,configured:sbConfigured(),ua:navigator.userAgent.slice(0,90)});
-if(!window.supabase||!sbConfigured())return;
+function cloudInit(){if(!window.supabase||!sbConfigured())return;
 try{var h=(location.hash||'')+'&'+(location.search||''),m=/error_description=([^&]+)/.exec(h);if(m)ui.cl.urlErr=decodeURIComponent(m[1].replace(/\+/g,' '));
  ui.cl.back=/access_token=|[?&]code=|[#&?]error=/.test((location.hash||'')+(location.search||''))}catch(e){}
-try{sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){sb=null;dbg('createClient FAILED',e.message);return}
-try{var ks=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(/^sb-/.test(k)||/^questlog\./.test(k))ks.push(k)}dbg('localStorage keys',ks)}catch(e){}
-sb.auth.onAuthStateChange(function(event,session){dbg('onAuthStateChange: '+event,{hasSession:!!session,session:session});setTimeout(function(){try{onSession(session,event)}catch(e){dbg('onSession ERROR',e.message)}},0)});
-ui.sessP=Promise.resolve().then(function(){return sb.auth.getSession()}).then(function(r){dbg('getSession',{error:r&&r.error?(r.error.message||String(r.error)):null,hasSession:!!(r&&r.data&&r.data.session),session:r&&r.data&&r.data.session});return r&&r.data&&r.data.session||null}).catch(function(e){dbg('getSession THREW',(e&&e.message)||String(e));return null});
-[2500,6000].forEach(function(ms){setTimeout(function(){sb.auth.getSession().then(function(r){dbg('getSession +'+ms+'ms',{error:r&&r.error?r.error.message:null,hasSession:!!(r&&r.data&&r.data.session),email:r&&r.data&&r.data.session&&r.data.session.user.email});if(r&&r.data&&r.data.session)onSession(r.data.session,'LATE')}).catch(function(e){dbg('getSession late THREW',e.message)})},ms)});
+try{sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){sb=null;return}
+sb.auth.onAuthStateChange(function(event,session){setTimeout(function(){onSession(session,event)},0)});
+ui.sessP=Promise.resolve().then(function(){return sb.auth.getSession()}).then(function(r){return r&&r.data&&r.data.session||null}).catch(function(){return null});
 ui.sessP.then(function(s){if(s)onSession(s,'BOOT')});
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')cloudPull(false)});
 window.addEventListener('online',function(){if(CL.dirty)cloudChanged()})}
@@ -1289,7 +1272,7 @@ function renderGate(){var o=$('#onb');o.hidden=false;ui.gate=true;
  o.innerHTML='<div class="onb-in gx gate"><div class="gate-ic">'+ic('controller',42)+'</div><div><h1>'+t('welTitle')+'</h1><p class="muted" style="margin-top:8px">'+t('welSub')+'</p></div>'+googleBtn()+'<button class="btn wide" data-a="g-guest">'+t('continueGuest')+'</button><p class="muted sm">'+t('welNote')+'</p></div>'}
 function enterApp(){ui.gate=false;if(S.profile)showApp();else showOnb()}
 async function signInWithGoogle(){if(!sbConfigured()){toast(t('notCfg'));return}if(!sb){toast(t('noSb'));return}
-dbg('signInWithOAuth redirectTo',(window.location.origin+window.location.pathname).replace(/index\.html$/,''));var r=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:(window.location.origin+window.location.pathname).replace(/index\.html$/,'')}});dbg('signInWithOAuth result',{error:r&&r.error?r.error.message:null,url:r&&r.data&&r.data.url?dbgUrl(r.data.url).slice(0,120):null});if(r&&r.error){toast(r.error.message);alert('Sign-in error: '+r.error.message)}}
+var r=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:(window.location.origin+window.location.pathname).replace(/index\.html$/,'')}});if(r&&r.error)toast(r.error.message)}
 async function signOutCloud(wipe){if(!sb)return;clearTimeout(ui.cl.t);if(!wipe&&CL.dirty&&ui.cl.ready)await pushCloud();
 try{await sb.auth.signOut()}catch(e){}setUser(null);ui.cl.ready=false;ui.cl.uid=null;ui.cl.loginP=null;ui.cl.paused=false;setGuest(false);ui.setPage=null;
 if(wipe){try{indexedDB.deleteDatabase('questlog-media')}catch(e){}CL={uid:null,at:'',dirty:false};cloudMeta();S=defaults();ui.cl.applying=true;saveNow();ui.cl.applying=false;applyTheme();$('#view').innerHTML='';renderGate()}else{renderGate()}}
@@ -1384,7 +1367,6 @@ async function boot(){
  if(sess&&sess.user){setUser(sess.user);if(!S.profile)await Promise.race([ensureLogin(sess.user),wait(8000)])}
  await min;
  var sp=$('#splash');sp.classList.add('hide');setTimeout(function(){sp.remove()},650);ui.appUp=true;
- dbg('boot decision',{sessionUser:sess&&sess.user?sess.user.email:null,hasProfile:!!S.profile,gate:needGate(),guestFlag:guestChosen()});
  if(needGate())renderGate();else if(!S.profile)showOnb();else showApp();
  if(ui.cl.urlErr)toast(ui.cl.urlErr);else if(ui.cl.back&&!(sess&&sess.user)&&sb)toast(t('authFailed'));
  setTimeout(cleanAuthUrl,1500)
