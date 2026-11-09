@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "Gamelog",
+  "short_name": "Gamelog",
+  "description": "Your personal video game backlog tracker: status, playtime, reviews, gallery and news.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#0B0C14",
+  "theme_color": "#0B0C14",
+  "categories": ["games", "entertainment", "lifestyle"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
