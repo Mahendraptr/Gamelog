@@ -629,8 +629,8 @@ function t(k,p){var s=(L[S.settings.lang]||L.en)[k];if(s==null)s=L.en[k];if(s==n
 var KEY='questlog.v1';
 var AI_MODEL='gemini-3.8-flash';
 var AI_PROV={
- gemini:{name:'Google Gemini',model:'gemini-1.5-flash',host:'generativelanguage.googleapis.com',keyUrl:'aistudio.google.com/apikey'},
- groq:{name:'Groq AI (Meta Llama 3)',model:'llama3-8b-8192',url:'https://api.groq.com/openai/v1/chat/completions',host:'api.groq.com',keyUrl:'console.groq.com/keys'},
+ gemini:{name:'Google Gemini',model:'gemini-2.0-flash',host:'generativelanguage.googleapis.com',keyUrl:'aistudio.google.com/apikey'},
+ groq:{name:'Groq AI (Meta Llama 3)',model:'llama-3.3-70b-versatile',url:'https://api.groq.com/openai/v1/chat/completions',host:'api.groq.com',keyUrl:'console.groq.com/keys'},
  openrouter:{name:'OpenRouter (Free Models)',model:'meta-llama/llama-3-8b-instruct:free',url:'https://openrouter.ai/api/v1/chat/completions',host:'openrouter.ai',keyUrl:'openrouter.ai/keys'}};
 function defaults(){return {profile:null,settings:{lang:'en',mode:'dark',accent:'ember',basis:'main',sound:true,view:'grid',sort:'added',rvView:'grid',bgCover:false,reactions:true,gridCols:2,customGenres:[],customPlatforms:[],igdbClientId:'',igdbClientSecret:'',proxyUrl:'https://corsproxy.io/?url=',aiProvider:'gemini',aiKeys:{},aiModels:{}},games:[]}}
 function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r),d=defaults();d.profile=o.profile||null;d.settings=Object.assign(d.settings,o.settings||{});if(d.settings.geminiKey&&!d.settings.aiKey)d.settings.aiKey=d.settings.geminiKey;if(!d.settings.aiKeys||typeof d.settings.aiKeys!=='object')d.settings.aiKeys={};if(!d.settings.aiModels||typeof d.settings.aiModels!=='object')d.settings.aiModels={};if(d.settings.aiKey){if(!d.settings.aiKeys.gemini){d.settings.aiKeys.gemini=d.settings.aiKey;if(!d.settings.aiModels.gemini)d.settings.aiModels.gemini=AI_MODEL}delete d.settings.aiKey}if(!AI_PROV[d.settings.aiProvider])d.settings.aiProvider='gemini';['geminiKey','geminiModel'].forEach(function(k){delete d.settings[k]});['igdbProxy','corsToken','backloggd','hltbProxy'].forEach(function(k){delete d.settings[k]});d.games=Array.isArray(o.games)?o.games.filter(function(g){return !g.sample}):[];return d}}catch(e){}return defaults()}
@@ -881,13 +881,15 @@ else if(a.state==='ok')body='<div class="xlist">'+a.items.map(function(c){return
 el.innerHTML='<div class="ai"><div class="row"><div style="display:flex;gap:8px;align-items:center;color:var(--accent)">'+ic('spark',20)+'<b style="color:var(--fg)">'+t('aiTitle')+'</b></div><div style="display:flex;gap:8px;align-items:center"><button class="btn sm" data-a="x-ai">'+t('askAI')+'</button>'+(a.state!=='idle'?'<button class="iconbtn sm" data-a="ai-close" aria-label="'+t('close')+'">'+ic('close',18)+'</button>':'')+'</div></div>'+body+'</div>'}
 function aiProv(){var p=S.settings.aiProvider;return AI_PROV[p]?p:'gemini'}
 function aiKeyNow(){return String((S.settings.aiKeys||{})[aiProv()]||'').trim()}
-function aiModelNow(){var p=aiProv();return String((S.settings.aiModels||{})[p]||'').trim()||AI_PROV[p].model}
+var AI_DEAD={'gemini-1.5-flash':1,'gemini-1.5-pro':1,'llama3-8b-8192':1,'llama3-70b-8192':1,'llama2-70b-4096':1,'mixtral-8x7b-32768':1};
+/* pure model id: trims spaces, drops any 'models/' prefix, and swaps retired ids for the provider default */
+function aiModelNow(){var p=aiProv(),m=String((S.settings.aiModels||{})[p]||'').trim().replace(/^\/+/,'').replace(/^models\//i,'');if(!m||AI_DEAD[m.toLowerCase()])m=AI_PROV[p].model;return m}
 /* One entry point for every provider: builds the request in the provider's own format and returns the reply text. */
 function aiRequest(prompt,o){o=o||{};var p=aiProv(),P=AI_PROV[p],key=aiKeyNow(),model=aiModelNow();
  if(!key)return Promise.reject(new Error(t('aiNoKey')));
  var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},o.timeout||30000),url,headers,body;
- if(p==='gemini'){url='https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent';
-  headers={'Content-Type':'application/json','x-goog-api-key':key};
+ if(p==='gemini'){url='https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent?key='+encodeURIComponent(key);
+  headers={'Content-Type':'application/json'};
   var gc={maxOutputTokens:o.max||700};if(o.json)gc.responseMimeType='application/json';
   body={contents:[{parts:[{text:prompt}]}],generationConfig:gc}}
  else{url=P.url;headers={'Content-Type':'application/json','Authorization':'Bearer '+key};
