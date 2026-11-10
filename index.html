@@ -15,7 +15,7 @@
   --bg:#F3F3F8; --surface:#FFFFFF; --surface2:#EAEAF3; --line:#DBDBE7; --fg:#171826; --muted:#666981;
   --accent:#FF6A3D; --accent-ink:#FFFFFF;
   --c-progress:#1F7FE6; --c-completed:#17A06A; --c-backlog:#8E93A8; --c-paused:#C99A00; --c-abandoned:#D23B3B; --c-wishlist:#D6408D;
-  --gold:#E2A400; --glow:#22E58B; --shadow:0 8px 24px rgba(20,20,50,.08);
+  --gold:#E2A400; --glow:#5CCBFF; --shadow:0 8px 24px rgba(20,20,50,.08);
   --display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
   --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
@@ -339,7 +339,16 @@ select.fld{-webkit-appearance:none;appearance:none}
 .rinfo{flex:1;min-width:0}
 .ring{--p:70;width:54px;height:54px;border-radius:50%;flex:none;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--surface2) 0);display:grid;place-items:center}
 .ring span{width:42px;height:42px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font:800 15px var(--display)}
-.ring.big{width:84px;height:84px}.ring.big span{width:68px;height:68px;font-size:24px}
+.sc-r{--sc:#EF4444}.sc-y{--sc:#F5B400}.sc-g{--sc:#22C55E}
+.ring{width:66px;height:66px;background:conic-gradient(var(--sc,var(--accent)) calc(var(--p)*1%),color-mix(in srgb,var(--sc,var(--accent)) 16%,var(--surface2)) 0);box-shadow:0 0 18px -6px var(--sc,transparent)}
+.ring span{width:52px;height:52px;background:color-mix(in srgb,var(--sc,var(--accent)) 10%,var(--surface));color:var(--sc,var(--text));font:800 22px/1 var(--display);letter-spacing:-.03em}
+.rc2 .ring{width:66px;height:66px}.rc2 .ring span{width:52px;height:52px;font-size:22px}
+.ring.big{width:112px;height:112px}.ring.big span{width:92px;height:92px;font-size:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring.big b{font:800 38px/1 var(--display);letter-spacing:-.04em}.ring.big small{font:700 12px/1 var(--body);opacity:.7;color:var(--muted)}
+.score.sc-r,.score.sc-y,.score.sc-g{min-width:48px;padding:6px 12px;font:800 20px/1 var(--display);letter-spacing:-.03em;background:var(--sc);color:#fff;border:0;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.45),0 0 0 2px rgba(255,255,255,.18) inset;text-align:center;right:8px;bottom:8px}
+.score.sc-y{color:#241A00}.score.sc-g{color:#032B12}
+html[data-cols="4"] .score.sc-r,html[data-cols="4"] .score.sc-y,html[data-cols="4"] .score.sc-g,html[data-cols="5"] .score.sc-r,html[data-cols="5"] .score.sc-y,html[data-cols="5"] .score.sc-g{font-size:15px;min-width:36px;padding:4px 8px;border-radius:11px}
+html[data-cols="4"] .med svg,html[data-cols="5"] .med svg{width:26px;height:34px}
 .bars{display:flex;flex-direction:column;gap:7px}
 .b4{display:grid;grid-template-columns:104px 1fr 30px;gap:10px;align-items:center;font-size:12.5px;color:var(--muted)}
 .b4 b{color:var(--fg);text-align:right;font-weight:600}
@@ -367,7 +376,7 @@ select.fld{-webkit-appearance:none;appearance:none}
 .mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .mcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
 .mcard.locked svg{filter:grayscale(1);opacity:.45}
-.mhero{display:flex;align-items:center;gap:16px;background:linear-gradient(140deg,color-mix(in srgb,var(--gold) 20%,var(--surface)),var(--surface));border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));border-radius:22px;padding:16px}
+.mhero{display:flex;align-items:center;gap:16px;background:linear-gradient(140deg,color-mix(in srgb,#4FA8FF 20%,var(--surface)),var(--surface));border:1px solid color-mix(in srgb,#4FA8FF 45%,var(--line));border-radius:22px;padding:16px}
 .mhero h2{font:800 22px var(--display)}
 .sl{display:flex;flex-direction:column;gap:2px}
 .slh{display:flex;justify-content:space-between;align-items:center;font-weight:600}
@@ -472,7 +481,7 @@ details.fq p{margin-top:8px;color:var(--muted);font-size:14px}
   </div>
   <button id="tapSound" hidden></button>
 </div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A3"/><stop offset=".55" stop-color="#F2B93B"/><stop offset="1" stop-color="#C98A00"/></linearGradient><linearGradient id="plat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".35" stop-color="#DCE5F2"/><stop offset=".7" stop-color="#A9B7CE"/><stop offset="1" stop-color="#EAF1FB"/></linearGradient></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A3"/><stop offset=".55" stop-color="#F2B93B"/><stop offset="1" stop-color="#C98A00"/></linearGradient><linearGradient id="dia" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2FDFF"/><stop offset=".35" stop-color="#9BE4FF"/><stop offset=".7" stop-color="#3FA9FF"/><stop offset="1" stop-color="#B7F0FF"/></linearGradient><linearGradient id="plat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".35" stop-color="#DCE5F2"/><stop offset=".7" stop-color="#A9B7CE"/><stop offset="1" stop-color="#EAF1FB"/></linearGradient></defs></svg>
 <input type="file" id="fileCover" accept="image/*" hidden>
 <input type="file" id="fileShot" accept="image/*" multiple hidden>
 <input type="file" id="fileVid" accept="video/*" hidden>
@@ -559,12 +568,12 @@ visual:'Visual',gameplay:'Gameplay',audio:'Audio',design:'Design / Technical',fi
 noReviews:'No reviews yet',noReviewsHint:'Rate a game on four categories. The average becomes its final score.',noLibForReview:'Add a game to your library first.',
 totalGames:'Games',completionRate:'Completion rate',avgScore:'Average score',toClear:'Left to clear',weeksAt:'about {n} weeks at 10 h/week',statusSplit:'Status split',categoryScores:'Average by category',topGenres:'Top genres',topPlatforms:'Top platforms',noScores:'Write a review to see category averages.',
 addShot:'Add screenshot',noShots:'No screenshots yet',noShotsHint:'Add screenshots from games in your library.',
-medalsHint:'Earned by finishing a game at 100% completion.',noMedals:'No medals yet',earned:'{n} earned',markFull:'Mark 100%',almost:'Completed, not yet 100%',
+medalsHint:'Diamond medals are earned by finishing a game at 100% completion.',noMedals:'No medals yet',earned:'{n} earned',markFull:'Mark 100%',almost:'Completed, not yet 100%',
 profile:'Profile',editProfile:'Edit profile',name:'Name',bio:'Short bio',avatar:'Avatar',uploadPhoto:'Upload photo',removePhoto:'Remove photo',nameReq:'Enter a name to continue',
 customGenres:'Custom genres',customPlatforms:'Custom platforms',addGenre:'New genre',addPlatform:'New platform',
 backup:'Backup & restore',backupHint:'Your list lives on this device. Copy a backup and keep it somewhere safe.',copyBackup:'Copy backup',copied:'Copied to clipboard',copyFail:'Copy blocked. Select the text and copy it by hand.',showText:'Show backup text',hideText:'Hide text',restore:'Restore',restoreFile:'Choose backup file',pasteHere:'Paste backup text here',restored:'Backup restored',badBackup:'That does not look like a Gamelog backup',incShots:'Include screenshots',
 appearance:'Theme & language',mode:'Mode',mode_system:'System',mode_light:'Light',mode_dark:'Dark',accent:'Accent colour',language:'Language',playBasis:'Playtime basis',sfx:'Sound effects',
-sources:'IGDB connection',sourcesHint:'All game data comes from IGDB. Your keys stay on this device, but they are sent through the Proxy URL below. Only use a proxy you trust. Clear the field to call IGDB directly.',igdbProxy:'IGDB proxy URL',hltbProxy:'HowLongToBeat proxy URL',aiKeyLbl:'AI API key',
+sources:'IGDB connection',sourcesHint:'All game data comes from IGDB. Your keys stay on this device, but they are sent through the Proxy URL below. Only use a proxy you trust. Clear the field to call IGDB directly.',igdbProxy:'IGDB proxy URL',hltbProxy:'HowLongToBeat proxy URL',aiKeyLbl:'API key',aiProvider:'AI provider',aiModel:'Model (optional)',aiGetKey:'Get a key at',
 help:'Help',faq:'FAQ',about:'About us',contact:'Contact',
 aboutText:'Gamelog is a personal tracker for the games you want to play, are playing, and have finished. It runs on your device, keeps your list private, and uses IGDB for game data and HowLongToBeat for playtime. Version 1.0.',
 contactHint:'Write a message, copy it, and send it to the developer.',yourMessage:'Your message',copyMessage:'Copy message',
@@ -594,12 +603,12 @@ visual:'Visual',gameplay:'Gameplay',audio:'Audio',design:'Desain / Teknis',final
 noReviews:'Belum ada ulasan',noReviewsHint:'Nilai game di empat kategori. Rata-ratanya jadi skor akhir.',noLibForReview:'Tambahkan game ke daftar dulu.',
 totalGames:'Game',completionRate:'Tingkat tamat',avgScore:'Skor rata-rata',toClear:'Sisa untuk ditamatkan',weeksAt:'sekitar {n} minggu dengan 10 jam/minggu',statusSplit:'Pembagian status',categoryScores:'Rata-rata per kategori',topGenres:'Genre teratas',topPlatforms:'Platform teratas',noScores:'Tulis ulasan untuk melihat rata-rata kategori.',
 addShot:'Tambah tangkapan layar',noShots:'Belum ada tangkapan layar',noShotsHint:'Tambahkan tangkapan layar dari game di daftarmu.',
-medalsHint:'Didapat dengan menamatkan game sampai 100%.',noMedals:'Belum ada medali',earned:'{n} didapat',markFull:'Tandai 100%',almost:'Tamat, belum 100%',
+medalsHint:'Medali Diamond didapat dengan menamatkan game sampai 100%.',noMedals:'Belum ada medali',earned:'{n} didapat',markFull:'Tandai 100%',almost:'Tamat, belum 100%',
 profile:'Profil',editProfile:'Ubah profil',name:'Nama',bio:'Bio singkat',avatar:'Avatar',uploadPhoto:'Unggah foto',removePhoto:'Hapus foto',nameReq:'Isi nama untuk melanjutkan',
 customGenres:'Genre kustom',customPlatforms:'Platform kustom',addGenre:'Genre baru',addPlatform:'Platform baru',
 backup:'Cadangan & pulihkan',backupHint:'Daftarmu tersimpan di perangkat ini. Salin cadangan dan simpan di tempat aman.',copyBackup:'Salin cadangan',copied:'Disalin ke papan klip',copyFail:'Penyalinan diblokir. Pilih teks dan salin manual.',showText:'Tampilkan teks cadangan',hideText:'Sembunyikan teks',restore:'Pulihkan',restoreFile:'Pilih berkas cadangan',pasteHere:'Tempel teks cadangan di sini',restored:'Cadangan dipulihkan',badBackup:'Ini bukan cadangan Gamelog',incShots:'Sertakan tangkapan layar',
 appearance:'Tema & bahasa',mode:'Mode',mode_system:'Sistem',mode_light:'Terang',mode_dark:'Gelap',accent:'Warna aksen',language:'Bahasa',playBasis:'Dasar waktu main',sfx:'Efek suara',
-sources:'Koneksi IGDB',sourcesHint:'Semua data game berasal dari IGDB. Kuncimu tetap di perangkat ini, tetapi dikirim lewat URL proxy di bawah. Pakai proxy yang kamu percaya. Kosongkan kolom untuk memanggil IGDB langsung.',igdbProxy:'URL proxy IGDB',hltbProxy:'URL proxy HowLongToBeat',aiKeyLbl:'Kunci API AI',
+sources:'Koneksi IGDB',sourcesHint:'Semua data game berasal dari IGDB. Kuncimu tetap di perangkat ini, tetapi dikirim lewat URL proxy di bawah. Pakai proxy yang kamu percaya. Kosongkan kolom untuk memanggil IGDB langsung.',igdbProxy:'URL proxy IGDB',hltbProxy:'URL proxy HowLongToBeat',aiKeyLbl:'Kunci API',aiProvider:'Penyedia AI',aiModel:'Model (opsional)',aiGetKey:'Dapatkan kunci di',
 help:'Bantuan',faq:'FAQ',about:'Tentang kami',contact:'Kontak',
 aboutText:'Gamelog adalah pelacak pribadi untuk game yang ingin, sedang, dan sudah kamu mainkan. Berjalan di perangkatmu, daftarmu tetap privat, dengan data game dari IGDB dan waktu main dari HowLongToBeat. Versi 1.0.',
 contactHint:'Tulis pesan, salin, lalu kirim ke pengembang.',yourMessage:'Pesanmu',copyMessage:'Salin pesan',
@@ -619,8 +628,12 @@ function t(k,p){var s=(L[S.settings.lang]||L.en)[k];if(s==null)s=L.en[k];if(s==n
 /* ---------- state ---------- */
 var KEY='questlog.v1';
 var AI_MODEL='gemini-3.8-flash';
-function defaults(){return {profile:null,settings:{lang:'en',mode:'dark',accent:'ember',basis:'main',sound:true,view:'grid',sort:'added',rvView:'grid',bgCover:false,reactions:true,gridCols:2,customGenres:[],customPlatforms:[],igdbClientId:'',igdbClientSecret:'',proxyUrl:'https://corsproxy.io/?url=',aiKey:''},games:[]}}
-function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r),d=defaults();d.profile=o.profile||null;d.settings=Object.assign(d.settings,o.settings||{});if(d.settings.geminiKey&&!d.settings.aiKey)d.settings.aiKey=d.settings.geminiKey;['geminiKey','geminiModel'].forEach(function(k){delete d.settings[k]});['igdbProxy','corsToken','backloggd','hltbProxy'].forEach(function(k){delete d.settings[k]});d.games=Array.isArray(o.games)?o.games.filter(function(g){return !g.sample}):[];return d}}catch(e){}return defaults()}
+var AI_PROV={
+ gemini:{name:'Google Gemini',model:'gemini-1.5-flash',host:'generativelanguage.googleapis.com',keyUrl:'aistudio.google.com/apikey'},
+ groq:{name:'Groq AI (Meta Llama 3)',model:'llama3-8b-8192',url:'https://api.groq.com/openai/v1/chat/completions',host:'api.groq.com',keyUrl:'console.groq.com/keys'},
+ openrouter:{name:'OpenRouter (Free Models)',model:'meta-llama/llama-3-8b-instruct:free',url:'https://openrouter.ai/api/v1/chat/completions',host:'openrouter.ai',keyUrl:'openrouter.ai/keys'}};
+function defaults(){return {profile:null,settings:{lang:'en',mode:'dark',accent:'ember',basis:'main',sound:true,view:'grid',sort:'added',rvView:'grid',bgCover:false,reactions:true,gridCols:2,customGenres:[],customPlatforms:[],igdbClientId:'',igdbClientSecret:'',proxyUrl:'https://corsproxy.io/?url=',aiProvider:'gemini',aiKeys:{},aiModels:{}},games:[]}}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r),d=defaults();d.profile=o.profile||null;d.settings=Object.assign(d.settings,o.settings||{});if(d.settings.geminiKey&&!d.settings.aiKey)d.settings.aiKey=d.settings.geminiKey;if(!d.settings.aiKeys||typeof d.settings.aiKeys!=='object')d.settings.aiKeys={};if(!d.settings.aiModels||typeof d.settings.aiModels!=='object')d.settings.aiModels={};if(d.settings.aiKey){if(!d.settings.aiKeys.gemini){d.settings.aiKeys.gemini=d.settings.aiKey;if(!d.settings.aiModels.gemini)d.settings.aiModels.gemini=AI_MODEL}delete d.settings.aiKey}if(!AI_PROV[d.settings.aiProvider])d.settings.aiProvider='gemini';['geminiKey','geminiModel'].forEach(function(k){delete d.settings[k]});['igdbProxy','corsToken','backloggd','hltbProxy'].forEach(function(k){delete d.settings[k]});d.games=Array.isArray(o.games)?o.games.filter(function(g){return !g.sample}):[];return d}}catch(e){}return defaults()}
 S=load();
 var saveT;function save(){clearTimeout(saveT);saveT=setTimeout(saveNow,150)}
 var CASE='<svg viewBox="0 0 40 56" width="100%" aria-hidden="true"><rect width="40" height="56" rx="5" fill="#3D6BFF"/><rect x="4" y="4" width="32" height="34" rx="3" fill="#19F0FF" fill-opacity=".88"/><path d="M4 30l9-9 8 8 6-5 9 9v7H4z" fill="#fff" fill-opacity=".35"/><rect x="4" y="42" width="22" height="4" rx="2" fill="#fff" fill-opacity=".85"/><rect x="4" y="49" width="14" height="3" rx="1.5" fill="#fff" fill-opacity=".5"/></svg>';
@@ -645,6 +658,7 @@ function saveNow(){stamp();cloudChanged();if(ui.rxQ){var rq=ui.rxQ;ui.rxQ=null;s
 var ui={cl:{user:null,uid:null,state:'idle',err:'',at:0,ready:false,busy:false,applying:false,paused:false},appUp:false,live:newList(),top:newList(),igdbErr:'',tab:'home',q:'',status:null,plats:[],genres:[],sort:S.settings.sort,view:S.settings.view,rvTab:'reviews',rvQ:'',rvSort:'new',rvF100:false,stM:0,exTab:'games',news:{state:'idle',items:[],err:''},bgU:'',exQ:'',exGenre:'All',ai:{state:'idle',items:[]},live:{q:'',items:[],state:'idle',err:''},xmap:{},sh:null,rv:null,xa:null,pf:null,pick:'review',shotGame:null,bkOpen:false};
 function hoursFor(g,b){b=b||S.settings.basis;return (g.hltb&&g.hltb[b])||0}
 function fmtH(n,d){if(!n&&d)return '—';return (n>=100||Number.isInteger(n)?Math.round(n):Math.round(n*10)/10)+'h'}
+function scC(n){return n<5?'sc-r':n<8?'sc-y':'sc-g'}
 function fmtS(n){n=Math.round(n*10)/10;return n%1===0?String(n):n.toFixed(1)}
 function avg(r){return Math.round((r.visual+r.gameplay+r.audio+r.design)/4*10)/10}
 function hue(s){var h=0;s=String(s);for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h}
@@ -697,7 +711,7 @@ function catsHTML(){return STATUSES.map(function(s,i){var gs=S.games.filter(func
 return '<button class="cat'+(ui.status===s?' on':'')+'" style="--c:var(--c-'+s+');--i:'+i+'" data-a="cat" data-s="'+s+'"><span class="cat-ic">'+ic(CATIC[s],18)+'</span><span class="cat-n">'+gs.length+'</span><span class="cat-l">'+t('st_'+s)+'</span><span class="cat-h">'+fmtH(h)+'</span></button>'}).join('')}
 function filtered(){var q=ui.q.trim().toLowerCase();var a=S.games.filter(function(g){return (!ui.status||g.status===ui.status)&&(!ui.plats.length||ui.plats.indexOf(g.platform)>=0)&&(!ui.genres.length||ui.genres.some(function(x){return g.genres.indexOf(x)>=0}))&&(!q||g.title.toLowerCase().indexOf(q)>=0||(g.dev||'').toLowerCase().indexOf(q)>=0)});
 var cmp={added:function(a,b){return b.added-a.added},title:function(a,b){return a.title.localeCompare(b.title)},hours:function(a,b){return hoursFor(b)-hoursFor(a)},rating:function(a,b){return (b.review?avg(b.review):-1)-(a.review?avg(a.review):-1)},year:function(a,b){return (b.year||0)-(a.year||0)}}[ui.sort];return a.sort(cmp)}
-function gameCard(g){return '<button class="gcard" data-a="open-game" data-id="'+g.id+'"><div class="cv'+(g.full100?' glow':'')+'">'+coverHTML(g)+(g.full100?'<span class="med">'+medalSVG(null,24)+'</span>':'')+'</div><div class="gt">'+esc(g.title)+'</div><div class="gm"><span>'+esc(g.platform||'')+'</span><span class="mono hh">'+ic('clock',12)+fmtH(hoursFor(g),1)+'</span></div></button>'}
+function gameCard(g){return '<button class="gcard" data-a="open-game" data-id="'+g.id+'"><div class="cv'+(g.full100?' glow':'')+'">'+coverHTML(g)+(g.full100?'<span class="med">'+medalSVG(null,34)+'</span>':'')+'</div><div class="gt">'+esc(g.title)+'</div><div class="gm"><span>'+esc(g.platform||'')+'</span><span class="mono hh">'+ic('clock',12)+fmtH(hoursFor(g),1)+'</span></div></button>'}
 function gameRow(g){var h=hoursFor(g),pr=g.played&&h?Math.min(100,g.played/h*100):0;
 return '<button class="grow'+(g.full100?' glow':'')+'" data-a="open-game" data-id="'+g.id+'"><div class="rcv">'+coverHTML(g)+'</div><div class="gi"><div class="gt">'+esc(g.title)+(g.full100?'<span class="medi">'+medalSVG(null,15)+'</span>':'')+'</div><div class="gm"><span>'+esc(g.platform||'')+(g.year?' · '+g.year:'')+'</span></div><div class="pbar"><i style="width:'+pr+'%;background:var(--c-'+g.status+')"></i></div></div><div class="gr"><span class="pill" style="--c:var(--c-'+g.status+')">'+t('st_'+g.status)+'</span><span class="mono sm hh">'+ic('clock',12)+fmtH(h,1)+'</span></div></button>'}
 function updateHome(){var c=$('#cats');if(!c)return;c.innerHTML=catsHTML();
@@ -800,7 +814,7 @@ if(!gs.length){toast(t('noLibForReview'));return}
 openSheet('<div class="grab"></div><div class="gx sh"><div class="sh-title"><h2>'+t('pickGame')+'</h2><button class="iconbtn sm" data-a="close-sheet" aria-label="'+t('close')+'">'+ic('close',18)+'</button></div><div class="glist">'+gs.map(function(g){return '<button class="grow" data-a="pick-go" data-id="'+g.id+'"><div class="rcv">'+coverHTML(g)+'</div><div class="gi"><div class="gt">'+esc(g.title)+'</div><div class="gm"><span>'+t('st_'+g.status)+'</span></div></div>'+(g.review?'<span class="mono sm">'+fmtS(avg(g.review))+'</span>':'')+'</button>'}).join('')+'</div></div>')}
 function reviewSheet(id){var g=S.games.find(function(x){return x.id===id});if(!g)return;var r=g.review||{visual:7,gameplay:7,audio:7,design:7,text:''};
 ui.rv={id:id,visual:r.visual,gameplay:r.gameplay,audio:r.audio,design:r.design,text:r.text||'',full:!!g.full100};var sc=avg(ui.rv);
-openSheet('<div class="grab"></div><div class="gx sh"><div class="sh-head"><div class="rcv big">'+coverHTML(g)+'</div><div class="grow1"><div class="gt" style="font-size:18px">'+esc(g.title)+'</div><div class="muted sm">'+t('finalScore')+'</div></div><div class="ring big" id="rvRing" style="--p:'+sc*10+'"><span id="rvScore">'+fmtS(sc)+'</span></div></div>'+
+openSheet('<div class="grab"></div><div class="gx sh"><div class="sh-head"><div class="rcv big">'+coverHTML(g)+'</div><div class="grow1"><div class="gt" style="font-size:18px">'+esc(g.title)+'</div><div class="muted sm">'+t('finalScore')+'</div></div><div class="ring big '+scC(sc)+'" id="rvRing" style="--p:'+sc*10+'"><span><b id="rvScore">'+fmtS(sc)+'</b><small>/10</small></span></div></div>'+
 CATS4.map(function(k){return '<div class="sl"><div class="slh"><label for="sl_'+k+'">'+t(k)+'</label><b class="mono" id="v_'+k+'">'+ui.rv[k]+'</b></div><input id="sl_'+k+'" type="range" min="0" max="10" step="0.5" value="'+ui.rv[k]+'" style="--fill:'+ui.rv[k]*10+'%" data-i="rv-'+k+'"></div>'}).join('')+
 '<div><label class="lab" for="rvText">'+t('yourThoughts')+'</label><textarea id="rvText" class="fld" data-i="rv-text">'+esc(ui.rv.text)+'</textarea></div>'+
 '<div class="row"><div><b>'+t('full100')+'</b><div class="muted sm">'+t('full100Hint')+'</div></div><button class="sw'+(ui.rv.full?' on':'')+'" id="rvFull" role="switch" aria-checked="'+ui.rv.full+'" data-a="rv-full" aria-label="'+t('full100')+'"></button></div>'+
@@ -862,21 +876,40 @@ function renderAI(){var el=$('#exAI');if(!el)return;var a=ui.ai,q=norm(ui.exQ);i
 var body='';
 if(a.state==='loading')body='<div class="row"><span>'+t('aiThinking')+'</span><span class="dots"><i></i><i></i><i></i></span></div>';
 else if(a.state==='nokey')body='<p class="muted sm">'+t('aiNeedsKey')+'</p>';
-else if(a.state==='err')body='<p class="muted sm">'+t('aiFail')+'</p>';
+else if(a.state==='err')body='<p class="muted sm">'+t('aiFail')+(a.msg?'<br><span class="mono" style="word-break:break-word">'+esc(a.msg)+'</span>':'')+'</p>';
 else if(a.state==='ok')body='<div class="xlist">'+a.items.map(function(c){return xRow(c,c.reason)}).join('')+'</div>';
 el.innerHTML='<div class="ai"><div class="row"><div style="display:flex;gap:8px;align-items:center;color:var(--accent)">'+ic('spark',20)+'<b style="color:var(--fg)">'+t('aiTitle')+'</b></div><div style="display:flex;gap:8px;align-items:center"><button class="btn sm" data-a="x-ai">'+t('askAI')+'</button>'+(a.state!=='idle'?'<button class="iconbtn sm" data-a="ai-close" aria-label="'+t('close')+'">'+ic('close',18)+'</button>':'')+'</div></div>'+body+'</div>'}
-function askAI(){if(!S.settings.aiKey){ui.ai={state:'nokey',items:[]};renderAI();return}
+function aiProv(){var p=S.settings.aiProvider;return AI_PROV[p]?p:'gemini'}
+function aiKeyNow(){return String((S.settings.aiKeys||{})[aiProv()]||'').trim()}
+function aiModelNow(){var p=aiProv();return String((S.settings.aiModels||{})[p]||'').trim()||AI_PROV[p].model}
+/* One entry point for every provider: builds the request in the provider's own format and returns the reply text. */
+function aiRequest(prompt,o){o=o||{};var p=aiProv(),P=AI_PROV[p],key=aiKeyNow(),model=aiModelNow();
+ if(!key)return Promise.reject(new Error(t('aiNoKey')));
+ var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},o.timeout||30000),url,headers,body;
+ if(p==='gemini'){url='https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent';
+  headers={'Content-Type':'application/json','x-goog-api-key':key};
+  var gc={maxOutputTokens:o.max||700};if(o.json)gc.responseMimeType='application/json';
+  body={contents:[{parts:[{text:prompt}]}],generationConfig:gc}}
+ else{url=P.url;headers={'Content-Type':'application/json','Authorization':'Bearer '+key};
+  if(p==='openrouter')headers['X-Title']='Gamelog';
+  body={model:model,messages:[{role:'user',content:prompt}],max_tokens:o.max||700,temperature:.7}}
+ return fetch(url,{method:'POST',signal:ctl?ctl.signal:undefined,headers:headers,body:JSON.stringify(body)}).then(function(r){
+  return r.json().catch(function(){return {}}).then(function(j){clearTimeout(tm);
+   if(!r.ok||j.error){var m=(j.error&&(j.error.message||(typeof j.error==='string'?j.error:'')))||'';throw new Error('HTTP '+r.status+(m?' - '+String(m).slice(0,160):''))}
+   var tx='';try{tx=p==='gemini'?j.candidates[0].content.parts.map(function(x){return x.text||''}).join(''):j.choices[0].message.content}catch(e){}
+   if(!tx)throw new Error('Empty reply');return tx})},function(e){clearTimeout(tm);throw e})}
+function parseAIList(tx){tx=String(tx||'').replace(/```(?:json)?/gi,'');var a=tx.indexOf('['),b=tx.lastIndexOf(']');if(a<0||b<a)throw new Error('Bad reply format');var arr=JSON.parse(tx.slice(a,b+1));if(!Array.isArray(arr))throw new Error('Bad reply format');return arr}
+function generateAIRecommendations(){if(!aiKeyNow()){ui.ai={state:'nokey',items:[]};renderAI();return}
 ui.ai={state:'loading',items:[]};renderAI();
 var top=S.games.filter(function(g){return g.review}).sort(function(a,b){return avg(b.review)-avg(a.review)}).slice(0,8),
 rec=S.games.filter(function(g){return g.status==='completed'}).sort(function(a,b){return dOf(b,'fin')-dOf(a,'fin')}).slice(0,8);
 var fmt=function(a){return a.map(function(g){return g.title+(g.review?' ('+avg(g.review)+'/10)':'')}).join('; ')||'none yet'};
-var prompt='Recommend video games. The player highest rated games: '+fmt(top)+'. Recently completed: '+fmt(rec)+'. Suggest 6 different games they have not played. Reply with a JSON array of objects with keys title, year (number), genres (array of strings), reason (one short sentence, max 15 words, in '+(S.settings.lang==='id'?'Indonesian':'English')+').';
-var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},30000);
-fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(AI_MODEL)+':generateContent',{method:'POST',signal:ctl?ctl.signal:undefined,headers:{'Content-Type':'application/json','x-goog-api-key':S.settings.aiKey},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:'application/json',maxOutputTokens:700}})})
-.then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
-.then(function(j){var arr=JSON.parse(j.candidates[0].content.parts[0].text).filter(function(x){return x&&x.title&&!findLib(String(x.title))}).slice(0,5);var items=arr.map(function(x,i){return {cid:'a'+i,title:String(x.title),year:x.year||'',dev:'',genres:Array.isArray(x.genres)?x.genres:[],platforms:[],hltb:{main:0,extra:0,comp:0},reason:x.reason||''}});
-return Promise.all(items.map(function(it){return igdbOn()?igdbSearch(it.title).then(function(r){var m=bestMatch(r,it.title);if(m){it.cover=m.cover;it.summary=m.summary;it.shots=m.shots;it.igdbId=m.igdbId;it.score=m.score;it.vids=m.vids;if(!it.dev)it.dev=m.dev;if(m.platforms.length)it.platforms=m.platforms}return it}):Promise.resolve(it)})).then(function(done){clearTimeout(tm);ui.ai={state:'ok',items:done};renderAI()})})
-.catch(function(){clearTimeout(tm);ui.ai={state:'err',items:[]};renderAI()})}
+var prompt='Recommend video games. The player highest rated games: '+fmt(top)+'. Recently completed: '+fmt(rec)+'. Suggest 6 different games they have not played. Reply with ONLY a JSON array (no other text) of objects with keys title, year (number), genres (array of strings), reason (one short sentence, max 15 words, in '+(S.settings.lang==='id'?'Indonesian':'English')+').';
+aiRequest(prompt,{max:900,json:true,timeout:30000}).then(function(tx){
+var arr=parseAIList(tx).filter(function(x){return x&&x.title&&!findLib(String(x.title))}).slice(0,5);var items=arr.map(function(x,i){return {cid:'a'+i,title:String(x.title),year:x.year||'',dev:'',genres:Array.isArray(x.genres)?x.genres:[],platforms:[],hltb:{main:0,extra:0,comp:0},reason:x.reason||''}});
+return Promise.all(items.map(function(it){return igdbOn()?igdbSearch(it.title).then(function(r){var m=bestMatch(r,it.title);if(m){it.cover=m.cover;it.summary=m.summary;it.shots=m.shots;it.igdbId=m.igdbId;it.score=m.score;it.vids=m.vids;if(!it.dev)it.dev=m.dev;if(m.platforms.length)it.platforms=m.platforms}return it}):Promise.resolve(it)})).then(function(done){ui.ai={state:'ok',items:done};renderAI()})})
+.catch(function(e){ui.ai={state:'err',items:[],msg:(e&&e.name==='AbortError')?t('aiTimeout'):String((e&&e.message)||'')};renderAI()})}
+function askAI(){generateAIRecommendations()}
 var GMAP={'Role-playing (RPG)':'RPG','Platform':'Platformer','Simulator':'Simulation','Sport':'Sports','Real Time Strategy (RTS)':'Strategy','Turn-based strategy (TBS)':'Strategy',"Hack and slash/Beat 'em up":'Action','Point-and-click':'Adventure'};
 function mapPlat(a){a=String(a||'').trim();if(!a)return 'Other';
 if(/^ps5$/i.test(a))return 'PS5';if(/^ps4$/i.test(a))return 'PS4';if(/^ps2$/i.test(a))return 'PlayStation 2';if(/^(ps|psx|ps1)$/i.test(a))return 'PlayStation 1';if(/^psp$/i.test(a))return 'PSP';if(/vita/i.test(a))return 'PlayStation Vita';
@@ -944,12 +977,11 @@ function hlFail(act,manual){return '<p class="hlmsg">'+t('hlNone')+' <button cla
 function hlForm(g){var h=g.hltb||{};return '<form class="hlform" data-f="hl-set">'+[['v','main'],['e','extra'],['c','comp']].map(function(x){return '<label><span>'+t('basis_'+x[1])+'</span><input class="fld" name="'+x[0]+'" type="number" min="0" step="0.5" inputmode="decimal" value="'+(h[x[1]]||'')+'"></label>'}).join('')+'<button class="btn sm primary" type="submit">'+t('save')+'</button></form>'}
 function loadHours(g,box,retryAct,isItem){var el=$(box);if(el)el.innerHTML=hlBusy();
 fetchHours(g).then(function(h){if(h){g.hltb=h;if(!isItem)save()}var e=$(box),live=isItem?ui.xi===g:(ui.sh&&ui.sh.id===g.id);if(e&&live)e.innerHTML=h?hlHTML(g):hlFail(retryAct,!isItem)})}
-function aiTest(){var out=$('#aiOut');if(!out)return;var show=function(ok,m){out.innerHTML='<div class="'+(ok?'t-ok':'t-bad')+'">'+(ok?'✓ ':'✗ ')+esc(String(m).replace(/gemini/ig,'AI'))+'</div>'};
-var key=(S.settings.aiKey||'').trim();if(!key){show(false,t('aiNoKey'));return}
-out.innerHTML='<span class="dots"><i></i><i></i><i></i></span>';var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},20000);
-fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(AI_MODEL)+':generateContent',{method:'POST',signal:ctl?ctl.signal:undefined,headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:'Reply with the single word OK.'}]}],generationConfig:{maxOutputTokens:20}})})
-.then(function(r){return r.json().catch(function(){return {}}).then(function(j){clearTimeout(tm);if(!r.ok){show(false,'HTTP '+r.status+' '+((j.error&&j.error.message)||''));return}var tx='';try{tx=j.candidates[0].content.parts[0].text}catch(e){}show(true,t('aiOk')+(tx?': '+tx.trim().slice(0,40):''))})})
-.catch(function(e){clearTimeout(tm);show(false,(e&&e.name==='AbortError')?t('aiTimeout'):t('aiNet'))})}
+function aiTest(){var out=$('#aiOut');if(!out)return;var show=function(ok,m){out.innerHTML='<div class="'+(ok?'t-ok':'t-bad')+'">'+(ok?'✓ ':'✗ ')+esc(String(m))+'</div>'};
+if(!aiKeyNow()){show(false,t('aiNoKey'));return}
+out.innerHTML='<span class="dots"><i></i><i></i><i></i></span>';
+aiRequest('Reply with the single word OK.',{max:20,timeout:20000}).then(function(tx){show(true,AI_PROV[aiProv()].name+' · '+aiModelNow()+' — '+t('aiOk')+': '+tx.trim().slice(0,40))})
+.catch(function(e){show(false,(e&&e.name==='AbortError')?t('aiTimeout'):(e&&e.name==='TypeError')?t('aiNet'):(e&&e.message)||t('aiNet'))})}
 async function hltbTest(){var out=[],paint=function(){var el=$('#hlOut');if(el)el.innerHTML=out.map(function(l){return '<div class="'+(l[0]==='✓'?'t-ok':l[0]==='✗'?'t-bad':'')+'">'+esc(l)+'</div>'}).join('')};
 var ti=$('#hlTitle'),title=(ti&&ti.value.trim())||'Elden Ring',vs=titleVariants(title),got=null;
 for(var i=0;i<vs.length&&!got;i++){var url=HLTB+encodeURIComponent(vs[i]);out.push('Request: '+url);paint();
@@ -966,11 +998,11 @@ var liveT;
 function viewReview(){var seg=['reviews','stats','gallery','medals'];
 return '<div class="top gx"><h1>'+t('review')+'</h1><div style="display:flex;gap:8px"><button class="iconbtn" data-a="rv-toggle" aria-label="View">'+ic(S.settings.rvView==='list'?'grid':'list')+'</button><button class="iconbtn" data-a="rv-new" aria-label="'+t('writeReview')+'">'+ic('plus')+'</button></div></div><div class="scroll"><div class="gx page"><div class="seg">'+seg.map(function(k){return '<button class="'+(ui.rvTab===k?'on':'')+'" data-a="rv-tab" data-v="'+k+'">'+t(k)+'</button>'}).join('')+'</div>'+({reviews:rvReviews,stats:rvStats,gallery:rvGallery,medals:rvMedals}[ui.rvTab])()+'</div></div>'}
 function rvRow(g){var r=g.review,sc=avg(r);
-return '<button class="rcard rc2'+(g.full100?' glow':'')+'" data-a="rv-view" data-id="'+g.id+'"><div class="rcv">'+coverHTML(g)+'</div><div class="rinfo"><div class="gt">'+esc(g.title)+(g.full100?'<span class="medi">'+medalSVG(null,16)+'</span>':'')+'</div><p class="rtext">'+(r.text?esc(r.text):t('noText'))+'</p></div><div class="ring" style="--p:'+sc*10+'"><span>'+fmtS(sc)+'</span></div></button>'}
+return '<button class="rcard rc2'+(g.full100?' glow':'')+'" data-a="rv-view" data-id="'+g.id+'"><div class="rcv">'+coverHTML(g)+'</div><div class="rinfo"><div class="gt">'+esc(g.title)+(g.full100?'<span class="medi">'+medalSVG(null,24)+'</span>':'')+'</div><p class="rtext">'+(r.text?esc(r.text):t('noText'))+'</p></div><div class="ring '+scC(sc)+'" style="--p:'+sc*10+'"><span>'+fmtS(sc)+'</span></div></button>'}
 function rvRowPending(g){return '<button class="rcard rc2'+(g.full100?' glow':'')+'" data-a="rv-edit" data-id="'+g.id+'"><div class="rcv">'+coverHTML(g)+'</div><div class="rinfo"><div class="gt">'+esc(g.title)+'</div><p class="rtext">'+t('notReviewed')+'</p></div><span class="pill" style="--c:var(--accent)">'+t('writeReview')+'</span></button>'}
 function rvGridCard(g){var r=g.review,sc=avg(r);
-return '<button class="gcard rvg" data-a="rv-view" data-id="'+g.id+'"><div class="cv'+(g.full100?' glow':'')+'">'+coverHTML(g)+'<span class="score">'+fmtS(sc)+'</span>'+(g.full100?'<span class="med">'+medalSVG(null,24)+'</span>':'')+'</div><div class="gt">'+esc(g.title)+'</div><p class="rtext">'+(r.text?esc(r.text):t('noText'))+'</p></button>'}
-function rvGridPending(g){return '<button class="gcard rvg" data-a="rv-edit" data-id="'+g.id+'"><div class="cv'+(g.full100?' glow':'')+'">'+coverHTML(g)+'<span class="score todo">+<span class="tt"> '+t('writeReview')+'</span></span>'+(g.full100?'<span class="med">'+medalSVG(null,24)+'</span>':'')+'</div><div class="gt">'+esc(g.title)+'</div><p class="rtext">'+t('notReviewed')+'</p></button>'}
+return '<button class="gcard rvg" data-a="rv-view" data-id="'+g.id+'"><div class="cv'+(g.full100?' glow':'')+'">'+coverHTML(g)+'<span class="score '+scC(sc)+'">'+fmtS(sc)+'</span>'+(g.full100?'<span class="med">'+medalSVG(null,34)+'</span>':'')+'</div><div class="gt">'+esc(g.title)+'</div><p class="rtext">'+(r.text?esc(r.text):t('noText'))+'</p></button>'}
+function rvGridPending(g){return '<button class="gcard rvg" data-a="rv-edit" data-id="'+g.id+'"><div class="cv'+(g.full100?' glow':'')+'">'+coverHTML(g)+'<span class="score todo">+<span class="tt"> '+t('writeReview')+'</span></span>'+(g.full100?'<span class="med">'+medalSVG(null,34)+'</span>':'')+'</div><div class="gt">'+esc(g.title)+'</div><p class="rtext">'+t('notReviewed')+'</p></button>'}
 function rvMatch(g){var q=(ui.rvQ||'').trim().toLowerCase();return (!q||g.title.toLowerCase().indexOf(q)>=0||(g.review&&(g.review.text||'').toLowerCase().indexOf(q)>=0))&&(!ui.rvF100||g.full100)}
 function rvListHTML(){var G=S.games,grid=S.settings.rvView!=='list',so={new:function(a,b){return b.review.date-a.review.date},high:function(a,b){return avg(b.review)-avg(a.review)},low:function(a,b){return avg(a.review)-avg(b.review)},title:function(a,b){return a.title.localeCompare(b.title)}};
 var rs=G.filter(function(g){return g.review&&rvMatch(g)}).sort(so[ui.rvSort]||so.new),pend=G.filter(function(g){return g.status==='completed'&&!g.review&&rvMatch(g)}).sort(function(a,b){return b.added-a.added});
@@ -981,7 +1013,7 @@ function rvReviews(){var G=S.games;
 if(!G.some(function(g){return g.review})&&!G.some(function(g){return g.status==='completed'}))return empty(t('noReviews'),t('noReviewsHint'),'review')+'<button class="btn primary wide" data-a="rv-new">'+ic('plus',18)+t('writeReview')+'</button>';
 return '<label class="search">'+ic('search',18)+'<input id="rvQ" data-i="rvQ" type="search" placeholder="'+t('rvSearch')+'" value="'+esc(ui.rvQ||'')+'"></label><div class="chips">'+[['new','rvSortNew'],['high','rvSortHigh'],['low','rvSortLow'],['title','sort_title']].map(function(x){return '<button class="chip'+(ui.rvSort===x[0]?' on':'')+'" data-a="rv-sort" data-v="'+x[0]+'">'+t(x[1])+'</button>'}).join('')+'<button class="chip'+(ui.rvF100?' on':'')+'" data-a="rv-100">'+t('rvOnly100')+'</button></div><div id="rvList">'+rvListHTML()+'</div>'}
 function reviewView(id){var g=S.games.find(function(x){return x.id===id});if(!g||!g.review)return;var r=g.review,sc=avg(r);
-openSheet('<div class="grab"></div><div class="gx sh"><div class="sh-head"><div class="rcv big'+(g.full100?' glow':'')+'">'+coverHTML(g)+'</div><div class="grow1"><h2 class="dt">'+esc(g.title)+'</h2><div class="muted sm">'+fmtDate(r.date)+'</div>'+(g.full100?'<div class="row" style="justify-content:flex-start;gap:6px;color:var(--gold);margin-top:6px;font-weight:600">'+medalSVG(null,16)+t('full100')+'</div>':'')+'</div><div class="ring big" style="--p:'+sc*10+'"><span>'+fmtS(sc)+'</span></div></div>'+
+openSheet('<div class="grab"></div><div class="gx sh"><div class="sh-head"><div class="rcv big'+(g.full100?' glow':'')+'">'+coverHTML(g)+'</div><div class="grow1"><h2 class="dt">'+esc(g.title)+'</h2><div class="muted sm">'+fmtDate(r.date)+'</div>'+(g.full100?'<div class="row" style="justify-content:flex-start;gap:6px;color:var(--gold);margin-top:6px;font-weight:600">'+medalSVG(null,24)+t('full100')+'</div>':'')+'</div><div class="ring big '+scC(sc)+'" style="--p:'+sc*10+'"><span><b>'+fmtS(sc)+'</b><small>/10</small></span></div></div>'+
 '<div class="bars">'+CATS4.map(function(k){return '<div class="b4"><span>'+t(k)+'</span><div class="track"><i style="width:'+r[k]*10+'%"></i></div><b class="mono">'+r[k]+'</b></div>'}).join('')+'</div>'+
 '<div><div class="lab">'+t('yourThoughts')+'</div><p style="font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere">'+(r.text?esc(r.text):'<span class="muted">'+t('noText')+'</span>')+'</p></div>'+
 '<button class="btn primary wide" data-a="rv-edit" data-id="'+g.id+'">'+ic('review',18)+t('editReview')+'</button><button class="btn wide" data-a="close-sheet">'+t('close')+'</button></div>')}
@@ -1013,17 +1045,24 @@ function rvGallery(){var add='<button class="btn wide" data-a="shot-pick">'+ic('
 if(!S.games.some(function(g){return (g.gallery&&g.gallery.length)||(g.shots&&g.shots.length)}))return empty(t('noShots'),t('noShotsHint'),'image')+add;
 return add+'<label class="search">'+ic('search',18)+'<input id="galQ" data-i="galQ" type="search" placeholder="'+t('galSearch')+'" value="'+esc(ui.galQ||'')+'" autocomplete="off"></label><div id="galList">'+galList()+'</div>'}
 var STAR=(function(){var p=[];for(var i=0;i<10;i++){var r=i%2?4.9:11.8,a=-Math.PI/2+i*Math.PI/5;p.push((32+r*Math.cos(a)).toFixed(1)+','+(54+r*Math.sin(a)).toFixed(1))}return p.join(' ')})();
-function medalSVG(g,sz){return '<svg viewBox="0 0 64 84" width="'+sz+'" height="'+Math.round(sz*1.3)+'" aria-hidden="true" style="flex:none;vertical-align:middle"><path d="M16 2h13l8 27-13 3z" fill="#3D6BFF"/><path d="M48 2H35l-8 27 13 3z" fill="#7B5CFF"/><path d="M16 2h13l1.6 6H18z" fill="#fff" fill-opacity=".3"/><path d="M48 2H35l-1.6 6H46z" fill="#fff" fill-opacity=".3"/><circle cx="32" cy="55" r="26" fill="#5E6C86"/><circle cx="32" cy="54" r="25" fill="url(#plat)"/><circle cx="32" cy="54" r="20.5" fill="#8FA0BC" fill-opacity=".28"/><circle cx="32" cy="54" r="20.5" fill="none" stroke="#fff" stroke-width="1.8"/><text x="32" y="59.2" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="900" font-size="15" letter-spacing="-.6" fill="#33415C" stroke="#fff" stroke-width=".5" paint-order="stroke">100%</text><path d="M15 46a19 19 0 0 1 13-14" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="2.4" stroke-linecap="round"/><path d="M50 30l1.3 3.2 3.2 1.3-3.2 1.3L50 39l-1.3-3.2-3.2-1.3 3.2-1.3z" fill="#fff" fill-opacity=".9"/></svg>'}
+function medalSVG(g,sz){return '<svg viewBox="0 0 64 84" width="'+sz+'" height="'+Math.round(sz*1.3)+'" aria-hidden="true" style="flex:none;vertical-align:middle"><path d="M16 2h13l8 27-13 3z" fill="#1E88FF"/><path d="M48 2H35l-8 27 13 3z" fill="#00C2FF"/><path d="M16 2h13l1.6 6H18z" fill="#fff" fill-opacity=".3"/><path d="M48 2H35l-1.6 6H46z" fill="#fff" fill-opacity=".3"/><polygon points="42.3,29.1 56.9,43.7 56.9,64.3 42.3,78.9 21.7,78.9 7.1,64.3 7.1,43.7 21.7,29.1" fill="#1C4F9C" transform="translate(0 1.4)"/><polygon points="42.3,29.1 56.9,43.7 56.9,64.3 42.3,78.9 21.7,78.9 7.1,64.3 7.1,43.7 21.7,29.1" fill="url(#dia)" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d=\"M42.3 29.1L56.9 43.7L38.9 37.4z\" fill=\"#7FD6FF\"/><path d=\"M56.9 43.7L56.9 64.3L48.6 47.1z\" fill=\"#fff\"/><path d=\"M56.9 64.3L42.3 78.9L48.6 60.9z\" fill=\"#7FD6FF\"/><path d=\"M42.3 78.9L21.7 78.9L38.9 70.6z\" fill=\"#fff\"/><path d=\"M21.7 78.9L7.1 64.3L25.1 70.6z\" fill=\"#7FD6FF\"/><path d=\"M7.1 64.3L7.1 43.7L15.4 60.9z\" fill=\"#fff\"/><path d=\"M7.1 43.7L21.7 29.1L15.4 47.1z\" fill=\"#7FD6FF\"/><path d=\"M21.7 29.1L42.3 29.1L25.1 37.4z\" fill=\"#fff\"/><path d=\"M42.3 29.1L38.9 37.4\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M56.9 43.7L48.6 47.1\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M56.9 64.3L48.6 60.9\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M42.3 78.9L38.9 70.6\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M21.7 78.9L25.1 70.6\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M7.1 64.3L15.4 60.9\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M7.1 43.7L15.4 47.1\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><path d=\"M21.7 29.1L25.1 37.4\" stroke=\"#fff\" stroke-opacity=\".75\" stroke-width=\"1\"/><circle cx="32" cy="54" r="17" fill="#0E2A5C" fill-opacity=".85"/><circle cx="32" cy="54" r="17" fill="none" stroke="#CFF4FF" stroke-width="1.2"/><text x="32" y="54" dy=".36em" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="900" font-size="10.6" letter-spacing="-.4" fill="#fff">100%</text><path d="M13 28l1.3 3.2 3.2 1.3-3.2 1.3L13 37l-1.3-3.2-3.2-1.3 3.2-1.3z" fill="#fff" fill-opacity=".95" transform="translate(40 -8) scale(.9)"/></svg>'}
 function rvMedals(){var m=S.games.filter(function(g){return g.full100});
-return '<div class="mhero">'+medalSVG(null,52)+'<div><h2>'+t('earned',{n:m.length})+'</h2><p class="muted sm">'+t('medalsHint')+'</p></div></div>'+
-(m.length?'<div class="mgrid">'+m.map(function(g){return '<div class="mcard">'+medalSVG(g,56)+'<div class="gt">'+esc(g.title)+'</div><div class="muted sm">'+(g.review?fmtDate(g.review.date):t('st_completed'))+'</div></div>'}).join('')+'</div>':empty(t('noMedals'),t('medalsHint'),'medal'))+''}
+return '<div class="mhero">'+medalSVG(null,76)+'<div><h2>'+t('earned',{n:m.length})+'</h2><p class="muted sm">'+t('medalsHint')+'</p></div></div>'+
+(m.length?'<div class="mgrid">'+m.map(function(g){return '<div class="mcard">'+medalSVG(g,84)+'<div class="gt">'+esc(g.title)+'</div><div class="muted sm">'+(g.review?fmtDate(g.review.date):t('st_completed'))+'</div></div>'}).join('')+'</div>':empty(t('noMedals'),t('medalsHint'),'medal'))+''}
 
 /* ---------- SETTINGS ---------- */
 function listEditor(kind,items,ph){return '<div class="chips">'+(items.length?items.map(function(x){return '<span class="chip on">'+esc(x)+'<button class="x" data-a="'+kind+'-del" data-v="'+esc(x)+'" aria-label="'+t('delete')+' '+esc(x)+'">'+ic('close',12)+'</button></span>'}).join(''):'<span class="muted sm">'+t('none')+'</span>')+'</div><form class="row" data-f="'+kind+'-add"><input class="fld" name="v" placeholder="'+ph+'" maxlength="28" aria-label="'+ph+'"><button class="btn sm primary" type="submit">'+t('add')+'</button></form>'}
 function setRow(pg,icn,title,sub){var av=pg==='account'&&ui.cl.user&&((ui.cl.user.user_metadata||{}).avatar_url||(ui.cl.user.user_metadata||{}).picture);return '<button class="srow" data-a="set-open" data-p="'+pg+'"><span class="sic">'+(av?'<img class="sic-av" src="'+esc(av)+'" alt="" referrerpolicy="no-referrer">':ic(icn,20))+'</span><span class="stx"><b>'+title+'</b><span class="muted sm">'+esc(sub)+'</span></span>'+ic('chevron',18)+'</button>'}
+function aiFieldsHTML(){var s=S.settings,p=aiProv(),P=AI_PROV[p];
+return '<div><label class="lab" for="s_aiProv">'+t('aiProvider')+'</label><select id="s_aiProv" class="fld" data-c="ai-prov">'+Object.keys(AI_PROV).map(function(k){return '<option value="'+k+'"'+(k===p?' selected':'')+'>'+esc(AI_PROV[k].name)+'</option>'}).join('')+'</select></div>'+
+'<div><label class="lab" for="s_aiKey" id="aiKeyL">'+esc(P.name)+' · '+t('aiKeyLbl')+'</label><input id="s_aiKey" class="fld" type="password" data-i="ai-key" value="'+esc(aiKeyNow())+'" autocomplete="off" spellcheck="false"></div>'+
+'<div><label class="lab" for="s_aiModel">'+t('aiModel')+'</label><input id="s_aiModel" class="fld" type="text" data-i="ai-model" value="'+esc((s.aiModels||{})[p]||'')+'" placeholder="'+esc(P.model)+'" autocomplete="off" spellcheck="false"></div>'+
+'<p class="muted sm mono" id="aiEp" style="word-break:break-all">'+aiEpText()+'</p>'}
+function aiEpText(){var P=AI_PROV[aiProv()];return esc((P.url||'https://'+P.host)+' · '+t('aiGetKey')+' '+P.keyUrl)}
+function aiSwitchUI(){var P=AI_PROV[aiProv()],k=$('#s_aiKey'),m=$('#s_aiModel'),l=$('#aiKeyL'),e=$('#aiEp'),o=$('#aiOut');if(k)k.value=aiKeyNow();if(m){m.value=(S.settings.aiModels||{})[aiProv()]||'';m.placeholder=P.model}if(l)l.textContent=P.name+' · '+t('aiKeyLbl');if(e)e.innerHTML=aiEpText();if(o)o.innerHTML=''}
 function fieldsHTML(list){var s=S.settings;return list.map(function(f){return '<div><label class="lab" for="s_'+f[0]+'">'+t(f[1])+'</label><input id="s_'+f[0]+'" class="fld" type="'+f[2]+'" data-i="set-'+f[0]+'" value="'+esc(s[f[0]])+'" autocomplete="off" spellcheck="false"></div>'}).join('')}
 function openPage(pg){ui.setPage=pg;if(pg==='profile')ui.pf=Object.assign({},S.profile);
-if(pg==='connect')ui.snap=JSON.stringify({igdbClientId:S.settings.igdbClientId,igdbClientSecret:S.settings.igdbClientSecret,proxyUrl:S.settings.proxyUrl,aiKey:S.settings.aiKey});
+if(pg==='connect')ui.snap=JSON.stringify({igdbClientId:S.settings.igdbClientId,igdbClientSecret:S.settings.igdbClientSecret,proxyUrl:S.settings.proxyUrl,aiProvider:S.settings.aiProvider,aiKeys:JSON.parse(JSON.stringify(S.settings.aiKeys||{})),aiModels:JSON.parse(JSON.stringify(S.settings.aiModels||{}))});
 var v=$('#view');renderView();v.className='view '+(pg?'inr':'inl')}
 function discardPage(){if(ui.snap){Object.assign(S.settings,JSON.parse(ui.snap));ui.snap=null;ui.top=newList();ui.live=newList();directTok=null}openPage(null)}
 function viewSettings(){if(ui.setPage)return settingsPage(ui.setPage);var p=S.profile,s=S.settings;
@@ -1033,7 +1072,7 @@ setRow('account','shield',t('acctTitle'),accountSub())+
 setRow('theme','spark',t('specialTheme'),S.settings.bgCover?t('themeOn'):t('themeOff'))+
 setRow('appearance','palette',t('appearance'),t('mode_'+s.mode)+' · '+(s.lang==='id'?'Bahasa Indonesia':'English'))+
 setRow('custom','tag',t('customTitle'),s.customGenres.length+' '+t('genre').toLowerCase()+' · '+s.customPlatforms.length+' '+t('platform').toLowerCase())+
-setRow('connect','link',t('connTitle'),'IGDB '+(igdbOn()?t('connected'):t('notSet'))+' · AI '+(s.aiKey?t('connected'):t('notSet')))+
+setRow('connect','link',t('connTitle'),'IGDB '+(igdbOn()?t('connected'):t('notSet'))+' · AI '+(aiKeyNow()?t('connected'):t('notSet')))+
 setRow('backup','cloud',t('dataTitle'),S.games.length+' '+t('gamesWord'))+
 setRow('help','help',t('help'),t('faq')+' · '+t('about')+' · '+t('contact'))+
 '</div></div></div>'}
@@ -1055,15 +1094,15 @@ else if(pg==='backup'){title=t('dataTitle');body='<p class="muted sm">'+t('backu
 '<div id="bkBox"'+(ui.bkOpen?'':' hidden')+'><textarea id="bkText" class="fld mono" style="font-size:12px;min-height:130px" placeholder="'+t('pasteHere')+'" aria-label="'+t('pasteHere')+'"></textarea></div>'+
 '<div class="grid2"><button class="btn" data-a="bk-restore">'+t('restore')+'</button><button class="btn" data-a="bk-file">'+t('restoreFile')+'</button></div>'+'<div class="lab" style="margin-top:8px">'+t('dataZone')+'</div>'+(ui.cl.uid?'<p class="muted sm">'+t('resetCloudNote')+'</p>':'')+'<button class="btn danger wide" data-a="reset-all">'+ic('trash',18)+t('resetAll')+'</button>'}
 else if(pg==='connect'){title=t('connTitle');saveBar=true;body='<h3 class="gh">IGDB</h3>'+'<p class="muted sm">'+t('sourcesHint')+'</p>'+fieldsHTML([['igdbClientId','directId','text'],['igdbClientSecret','directSecret','password'],['proxyUrl','proxyLbl','url']])+
-'<button class="btn wide" data-a="igdb-test">'+t('testBtn')+'</button><div id="testOut" class="mono sm" style="word-break:break-word;color:var(--muted)"></div><input id="hlTitle" class="fld" value="Elden Ring" aria-label="'+t('hlTestTitle')+'" autocomplete="off"><button class="btn wide" data-a="hltb-test">'+t('testHl')+'</button><div id="hlOut" class="mono sm" style="word-break:break-word;color:var(--muted)"></div><button class="btn wide" data-a="sync-all">'+ic('image',18)+t('syncAll')+'</button>'+'<h3 class="gh" style="margin-top:10px">'+t('aiCard')+'</h3>'+'<p class="muted sm">'+t('aiHint')+'</p>'+fieldsHTML([['aiKey','aiKeyLbl','password']])+'<button class="btn wide" data-a="ai-test">'+t('testAi')+'</button><div id="aiOut" class="mono sm" style="word-break:break-word;color:var(--muted)"></div>'}
+'<button class="btn wide" data-a="igdb-test">'+t('testBtn')+'</button><div id="testOut" class="mono sm" style="word-break:break-word;color:var(--muted)"></div><input id="hlTitle" class="fld" value="Elden Ring" aria-label="'+t('hlTestTitle')+'" autocomplete="off"><button class="btn wide" data-a="hltb-test">'+t('testHl')+'</button><div id="hlOut" class="mono sm" style="word-break:break-word;color:var(--muted)"></div><button class="btn wide" data-a="sync-all">'+ic('image',18)+t('syncAll')+'</button>'+'<h3 class="gh" style="margin-top:10px">'+t('aiCard')+'</h3>'+'<p class="muted sm">'+t('aiHint')+'</p>'+aiFieldsHTML()+'<button class="btn wide" data-a="ai-test">'+t('testAi')+'</button><div id="aiOut" class="mono sm" style="word-break:break-word;color:var(--muted)"></div>'}
 else if(pg==='help'){title=t('help');body='<div>'+[1,2,3,4,5,6].map(function(i){return '<details class="fq"><summary>'+t('fq'+i)+'</summary><p>'+t('fa'+i)+'</p></details>'}).join('')+
 '<details class="fq"><summary>'+t('about')+'</summary><p>'+t('aboutText')+'</p></details>'+
 '<details class="fq"><summary>'+t('contact')+'</summary><p>'+t('contactHint')+'</p><label class="lab" for="cMsg" style="margin-top:10px">'+t('yourMessage')+'</label><textarea id="cMsg" class="fld"></textarea><button class="btn sm primary" style="margin-top:10px" data-a="copy-msg">'+ic('copy',16)+t('copyMessage')+'</button></details></div>'}
 return '<div class="top gx"><button class="iconbtn" data-a="'+(pg==='profile'?'p-discard':pg==='connect'?'set-discard':'set-back')+'" aria-label="'+t('back')+'">'+ic('back')+'</button><h1 class="ttl">'+title+'</h1></div><div class="scroll"><div class="gx page" data-page="'+pg+'">'+body+(saveBar?saveHTML:'')+'</div></div>'}
-function makeBackup(){var o={app:'gamelog',v:1,at:new Date().toISOString(),profile:S.profile,settings:Object.assign({},S.settings,{aiKey:'',igdbClientSecret:''}),games:S.games.map(function(g){var c=Object.assign({},g,{vids:(g.vids||[]).filter(function(v){return v.t==='yt'})});if(ui.incShots===false)c.gallery=[];return c})};return JSON.stringify(o)}
+function makeBackup(){var o={app:'gamelog',v:1,at:new Date().toISOString(),profile:S.profile,settings:Object.assign({},S.settings,{aiKeys:{},igdbClientSecret:''}),games:S.games.map(function(g){var c=Object.assign({},g,{vids:(g.vids||[]).filter(function(v){return v.t==='yt'})});if(ui.incShots===false)c.gallery=[];return c})};return JSON.stringify(o)}
 function doRestore(txt){var o;try{o=JSON.parse(txt)}catch(e){toast(t('badBackup'));return}
 if(!o||(o.app!=='gamelog'&&o.app!=='questlog')||!Array.isArray(o.games)){toast(t('badBackup'));return}
-S.profile=o.profile||S.profile;S.settings=Object.assign(defaults().settings,S.settings,o.settings||{},{aiKey:S.settings.aiKey,igdbClientSecret:S.settings.igdbClientSecret});S.games=o.games;saveNow();applyTheme();buildNav();refresh();toast(t('restored'))}
+S.profile=o.profile||S.profile;S.settings=Object.assign(defaults().settings,S.settings,o.settings||{},{aiKeys:S.settings.aiKeys,igdbClientSecret:S.settings.igdbClientSecret});S.games=o.games;saveNow();applyTheme();buildNav();refresh();toast(t('restored'))}
 
 /* ---------- profile form (onboarding + edit) ---------- */
 function profileForm(isOnb){var p=ui.pf;
@@ -1145,7 +1184,7 @@ case 'more-top':loadList('top',topFetch,true);break;
 case 'x-info':var xi=ui.xmap[el.dataset.k];if(xi)showInfo(xi);break;
 case 'xi-add':addSheet(ui.xi);break;
 case 'ai-close':ui.ai={state:'idle',items:[]};renderAI();break;
-case 'x-ai':askAI();break;
+case 'x-ai':generateAIRecommendations();break;
 case 'rv-tab':ui.rvTab=el.dataset.v;refresh();break;
 case 'rv-new':pickSheet('review');break;
 case 'rv-view':reviewView(el.dataset.id);break;
@@ -1199,10 +1238,12 @@ else if(k==='rvQ'){ui.rvQ=el.value;var rl=$('#rvList');if(rl)rl.innerHTML=rvList
 else if(k==='g-title'){var g=curG();if(!g)return;g.title=el.value;if(!ui.sh.draft)save()}
 else if(k==='g-dev'){var gd2=curG();if(gd2){gd2.dev=el.value;if(!ui.sh.draft)save()}}
 else if(k==='g-sum'){var gs2=curG();if(gs2){gs2.summary=el.value;if(!ui.sh.draft)save()}}
-else if(k.indexOf('rv-')===0){var f2=k.slice(3);if(CATS4.indexOf(f2)>=0){ui.rv[f2]=parseFloat(el.value);$('#v_'+f2).textContent=ui.rv[f2];el.style.setProperty('--fill',ui.rv[f2]*10+'%');var sc=avg(ui.rv);$('#rvScore').textContent=fmtS(sc);$('#rvRing').style.setProperty('--p',sc*10)}else ui.rv.text=el.value}
+else if(k.indexOf('rv-')===0){var f2=k.slice(3);if(CATS4.indexOf(f2)>=0){ui.rv[f2]=parseFloat(el.value);$('#v_'+f2).textContent=ui.rv[f2];el.style.setProperty('--fill',ui.rv[f2]*10+'%');var sc=avg(ui.rv);$('#rvScore').textContent=fmtS(sc);$('#rvRing').style.setProperty('--p',sc*10);$('#rvRing').classList.remove('sc-r','sc-y','sc-g');$('#rvRing').classList.add(scC(sc))}else ui.rv.text=el.value}
 else if(k==='pf-name')ui.pf.name=el.value;else if(k==='pf-bio')ui.pf.bio=el.value;
+else if(k==='ai-key'){var kk=S.settings.aiKeys=S.settings.aiKeys||{};kk[aiProv()]=el.value.trim();save()}
+else if(k==='ai-model'){var mm=S.settings.aiModels=S.settings.aiModels||{};mm[aiProv()]=el.value.trim();save()}
 else if(k.indexOf('set-')===0){S.settings[k.slice(4)]=el.value.trim();if(k.indexOf('set-igdb')===0||k==='set-proxyUrl'){ui.top=newList();ui.live=newList();directTok=null}save();if(ui.tab==='explore')updateExplore()}}
-function chg(k,el){var g=curG();
+function chg(k,el){if(k==='ai-prov'){S.settings.aiProvider=AI_PROV[el.value]?el.value:'gemini';save();aiSwitchUI();return}var g=curG();
 if(k==='g-plat'){g.platform=el.value;save()}
 else if(k==='g-year'){g.year=el.value?parseInt(el.value,10):'';save()}
 else if(k==='g-num'){var v=parseFloat(el.value);v=isNaN(v)?0:Math.max(0,v);if(el.dataset.f==='played')g.played=v;else{g.hltb=g.hltb||{};g.hltb[el.dataset.f]=v}save()}}
@@ -1287,8 +1328,8 @@ if(g.full100&&!c.full100)c.full100=true;
 if(gAct(g)>gAct(c)){['status','lastSt','played','finAt','dropAt'].forEach(function(f){if(g[f]!==undefined)c[f]=g[f]})}});
 return {profile:cloud.profile||loc.profile,settings:Object.assign({},loc.settings||{},cloud.settings||{}),games:games}}
 function localLib(){return {profile:S.profile,settings:S.settings,games:S.games}}
-function libPayload(){return {v:1,profile:S.profile,settings:Object.assign({},S.settings,{aiKey:'',igdbClientSecret:'',igdbClientId:'',proxyUrl:''}),games:S.games.map(function(g){var c=Object.assign({},g);c.vids=(g.vids||[]).filter(function(v){return v.t==='yt'});return c})}}
-function applyLib(lib){ui.cl.applying=true;var keep={igdbClientId:S.settings.igdbClientId,igdbClientSecret:S.settings.igdbClientSecret,proxyUrl:S.settings.proxyUrl,aiKey:S.settings.aiKey};
+function libPayload(){return {v:1,profile:S.profile,settings:Object.assign({},S.settings,{aiKeys:{},igdbClientSecret:'',igdbClientId:'',proxyUrl:''}),games:S.games.map(function(g){var c=Object.assign({},g);c.vids=(g.vids||[]).filter(function(v){return v.t==='yt'});return c})}}
+function applyLib(lib){ui.cl.applying=true;var keep={igdbClientId:S.settings.igdbClientId,igdbClientSecret:S.settings.igdbClientSecret,proxyUrl:S.settings.proxyUrl,aiProvider:S.settings.aiProvider,aiKeys:JSON.parse(JSON.stringify(S.settings.aiKeys||{})),aiModels:JSON.parse(JSON.stringify(S.settings.aiModels||{}))};
 S.profile=lib.profile||S.profile;S.settings=Object.assign({},defaults().settings,lib.settings||{},keep);S.games=Array.isArray(lib.games)?lib.games:[];
 saveNow();ui.cl.applying=false;applyTheme();
 if(S.profile){if($('#onb:not([hidden])'))showApp();else refresh()}}
