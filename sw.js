@@ -1,5 +1,5 @@
 /* Gamelog service worker: app shell works offline; API calls always go to the network. */
-const CACHE = 'gamelog-shell-v7';
+const CACHE = 'gamelog-shell-v8';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './maskable-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
